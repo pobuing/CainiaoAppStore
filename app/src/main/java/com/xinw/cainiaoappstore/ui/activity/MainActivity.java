@@ -1,55 +1,72 @@
-package com.xinw.cainiaoappstore;
+package com.xinw.cainiaoappstore.ui.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.xinw.cainiaoappstore.R;
+import com.xinw.cainiaoappstore.ui.adapter.ViewPageAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.app_name)
-    TextView appName;
+
     @BindView(R.id.dr_layout)
     DrawerLayout drLayout;
     @BindView(R.id.navigaview_left)
     NavigationView navigaviewLeft;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+    @BindView(R.id.vp_main)
+    ViewPager vpMain;
 
     private View headView;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        drLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
+        initDrawerLayout();
+        initTabLayout();
+    }
 
-            }
 
-            @Override
-            public void onDrawerOpened(View drawerView) {
+    /**
+     * 初始化TavLayout
+     */
+    private void initTabLayout() {
+        // toolbar填充菜单
+        toolbar.inflateMenu(R.menu.toolbar_menu);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drLayout, toolbar, R.string.open, R.string.close);
+        // TODO: 同步状态
+        actionBarDrawerToggle.syncState();
+        drLayout.addDrawerListener(actionBarDrawerToggle);
+        ViewPageAdapter adapter = new ViewPageAdapter(getSupportFragmentManager());
+        // TODO: 设置适配器
+        vpMain.setAdapter(adapter);
+        // TODO: 设置ViewPager
+        tabLayout.setupWithViewPager(vpMain);
+    }
 
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
-        });
+    /**
+     * 初始化抽屉布局
+     */
+    private void initDrawerLayout() {
         headView = navigaviewLeft.getHeaderView(0);
         headView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +92,5 @@ public class MainActivity extends Activity {
                 return false;
             }
         });
-
     }
 }
