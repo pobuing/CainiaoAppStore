@@ -1,7 +1,6 @@
 package com.xinw.cainiaoappstore.presenter.contract;
 
 import com.xinw.cainiaoappstore.bean.AppInfo;
-import com.xinw.cainiaoappstore.presenter.BasePresenter;
 import com.xinw.cainiaoappstore.ui.activity.BaseView;
 
 import java.util.List;
@@ -38,11 +37,6 @@ public interface RecommendContract {
 
     }
 
-    interface RePresenter extends BasePresenter {
-        /**
-         * 请求数据
-         */
-        void requestDatas();
-    }
+
 
 }

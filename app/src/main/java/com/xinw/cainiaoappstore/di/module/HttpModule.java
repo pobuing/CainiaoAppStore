@@ -1,7 +1,13 @@
-package com.xinw.cainiaoappstore.http;
+package com.xinw.cainiaoappstore.di.module;
+
+import com.xinw.cainiaoappstore.data.http.ApiService;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -9,13 +15,14 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * byD9ing on 2017/8/10.
- * Describe: http管理
+ * byD9ing on 2017/8/14.
+ * Describe: Http相关 Dagger2
  * good luck
  */
-
-public class HttpManager {
-
+@Module
+public class HttpModule {
+    @Provides
+    @Singleton
     public OkHttpClient getOkHttpClient() {
         // TODO: 构建log拦截器
         HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
@@ -31,6 +38,9 @@ public class HttpManager {
         return okHttpClient;
     }
 
+
+    @Provides
+    @Singleton
     public Retrofit getRetrofit(OkHttpClient okHttp) {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(ApiService.BASE_URL)
@@ -38,5 +48,11 @@ public class HttpManager {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(okHttp);
         return builder.build();
+    }
+
+    @Provides
+    @Singleton
+    public ApiService provideApiService(Retrofit retrofit){
+        return retrofit.create(ApiService.class);
     }
 }

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.xinw.cainiaoappstore.R;
 import com.xinw.cainiaoappstore.bean.AppInfo;
-import com.xinw.cainiaoappstore.http.ApiService;
+import com.xinw.cainiaoappstore.data.http.ApiService;
 
 import java.util.List;
 

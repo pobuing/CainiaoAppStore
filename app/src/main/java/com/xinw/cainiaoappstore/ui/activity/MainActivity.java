@@ -1,25 +1,23 @@
 package com.xinw.cainiaoappstore.ui.activity;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.xinw.cainiaoappstore.R;
+import com.xinw.cainiaoappstore.di.component.AppComponent;
 import com.xinw.cainiaoappstore.ui.adapter.ViewPageAdapter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
 
     @BindView(R.id.dr_layout)
@@ -36,13 +34,22 @@ public class MainActivity extends AppCompatActivity {
     private View headView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+    protected void init() {
         initDrawerLayout();
         initTabLayout();
+
+    }
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
+
+    }
+
+    @Override
+    protected int setLayoutId() {
+        return R.layout.activity_main;
     }
 
 

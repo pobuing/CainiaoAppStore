@@ -1,4 +1,4 @@
-package com.xinw.cainiaoappstore.http;
+package com.xinw.cainiaoappstore.data.http;
 
 import com.xinw.cainiaoappstore.bean.AppInfo;
 import com.xinw.cainiaoappstore.bean.PageBean;

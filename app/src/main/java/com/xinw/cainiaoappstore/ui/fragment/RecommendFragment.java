@@ -2,59 +2,60 @@ package com.xinw.cainiaoappstore.ui.fragment;
 
 
 import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.xinw.cainiaoappstore.R;
 import com.xinw.cainiaoappstore.bean.AppInfo;
+import com.xinw.cainiaoappstore.di.component.AppComponent;
+import com.xinw.cainiaoappstore.di.component.DaggerRecommendComponent;
+import com.xinw.cainiaoappstore.di.module.RecommendModule;
 import com.xinw.cainiaoappstore.presenter.RecommendPresenter;
 import com.xinw.cainiaoappstore.presenter.contract.RecommendContract;
 import com.xinw.cainiaoappstore.ui.adapter.RecomendAppAdapter;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Ivan on 16/9/26.
  */
 
-public class RecommendFragment extends Fragment implements RecommendContract.ReView {
+public class RecommendFragment extends BaseFragment<RecommendPresenter> implements RecommendContract.ReView {
 
     @BindView(R.id.recycle_view)
     RecyclerView mRecyclerView;
 
-
-    private ProgressDialog mProgressDialog;
+    @Inject
+    public ProgressDialog mProgressDialog;
     private RecomendAppAdapter reAdapter;
-    private RecommendPresenter recommendPresenter;
+
+    @Inject
+    RecommendPresenter recommendPresenter;
 
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-
-        View view = inflater.inflate(R.layout.fragment_recomend, container, false);
-        ButterKnife.bind(this, view);
-
-        mProgressDialog = new ProgressDialog(getActivity());
-        recommendPresenter = new RecommendPresenter(this);
-
+    protected void init() {
         initData();
-        return view;
 
+    }
 
+    @Override
+    protected void setUpActivityComponent(AppComponent appComponent) {
+        DaggerRecommendComponent.builder().appComponent(appComponent)
+                .recommendModule(new RecommendModule(this))
+                .build().inject(this);
+    }
+
+    @Override
+    public int setLayoutId() {
+        return R.layout.fragment_recomend;
     }
 
     /**

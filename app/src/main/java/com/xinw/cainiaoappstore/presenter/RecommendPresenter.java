@@ -5,6 +5,8 @@ import com.xinw.cainiaoappstore.bean.PageBean;
 import com.xinw.cainiaoappstore.data.RecommendModel;
 import com.xinw.cainiaoappstore.presenter.contract.RecommendContract;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,16 +17,13 @@ import retrofit2.Response;
  * good luck
  */
 
-public class RecommendPresenter implements RecommendContract.RePresenter {
-    private RecommendModel mModel;
-    private RecommendContract.ReView mView;
+public class RecommendPresenter extends BasePresenter<RecommendModel, RecommendContract.ReView> {
 
-    public RecommendPresenter(RecommendContract.ReView mView) {
-        this.mView = mView;
-        mModel = new RecommendModel();
+    @Inject
+    public RecommendPresenter(RecommendContract.ReView mView, RecommendModel model) {
+        super(model, mView);
     }
 
-    @Override
     public void requestDatas() {
         // TODO: progress show
         mView.showLoading();
