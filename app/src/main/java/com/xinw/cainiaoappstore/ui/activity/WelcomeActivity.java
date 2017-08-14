@@ -17,6 +17,7 @@ public class WelcomeActivity extends AppCompatActivity {
     @BindView(R.id.pathView)
     PathView pathView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void jumpToMain() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, GuideActivity.class));
         this.finish();
     }
 }

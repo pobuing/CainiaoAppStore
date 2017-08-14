@@ -7,4 +7,9 @@
     <color name="white">#fff</color>
     <color name="blue">#0000ff</color>
     <color name="black">#000000</color>
+
+
+    <color name="color_bg_guide1">#e74144</color>
+    <color name="color_bg_guide2">#5e98c9</color>
+    <color name="color_bg_guide3">#8eb021</color>
 </resources>
