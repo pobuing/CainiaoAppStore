@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.xinw.cainiaoappstore.R;
+import com.xinw.cainiaoappstore.common.constant.Constant;
+import com.xinw.cainiaoappstore.common.util.ACache;
 import com.xinw.cainiaoappstore.ui.adapter.GuideFragmentAdapter;
 import com.xinw.cainiaoappstore.ui.fragment.GuideFragment;
 import com.xinw.cainiaoappstore.ui.widget.CircleIndicator;
@@ -82,6 +84,7 @@ public class GuideActivity extends AppCompatActivity implements ViewPager.OnPage
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_enter:
+                ACache.get(this).put(Constant.IS_SHOW_GUIDE, "0");
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
                 break;

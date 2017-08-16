@@ -18,4 +18,5 @@ import dagger.Component;
 public interface AppComponent {
 
     public ApiService getApiService();
+
 }

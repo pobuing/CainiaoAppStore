@@ -49,7 +49,9 @@ public class RecomendAppAdapter extends RecyclerView.Adapter<RecomendAppAdapter.
     public void onBindViewHolder(ReViewHolder holder, int position) {
         AppInfo appInfo = mDatas.get(position);
         // TODO: loadImage
-        Picasso.with(mContext).load(ApiService.BASE_IMG_URL+appInfo.getIcon()).into(holder.imgIcon);
+//        Picasso.with(mContext).load(ApiService.BASE_IMG_URL+appInfo.getIcon()).into(holder.imgIcon);
+        Picasso.with(mContext).load(ApiService.BASE_IMG_URL +appInfo.getIcon()).into(holder.imgIcon);
+
         holder.textSize.setText((appInfo.getApkSize()/1024/1024)+" MB");
         holder.textTitle.setText(appInfo.getDisplayName());
     }

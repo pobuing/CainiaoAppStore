@@ -1,11 +1,11 @@
 package com.xinw.cainiaoappstore.ui.fragment;
 
 
-import android.app.ProgressDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.xinw.cainiaoappstore.R;
@@ -27,13 +27,12 @@ import butterknife.BindView;
  * Created by Ivan on 16/9/26.
  */
 
-public class RecommendFragment extends BaseFragment<RecommendPresenter> implements RecommendContract.ReView {
+public class RecommendFragment extends ProgressFragment<RecommendPresenter> implements RecommendContract.ReView {
 
     @BindView(R.id.recycle_view)
     RecyclerView mRecyclerView;
 
-    @Inject
-    public ProgressDialog mProgressDialog;
+
     private RecomendAppAdapter reAdapter;
 
     @Inject
@@ -47,15 +46,20 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
     }
 
     @Override
-    protected void setUpActivityComponent(AppComponent appComponent) {
+    protected int setLayout() {
+        return R.layout.fragment_recomend;
+    }
+
+    @Override
+    public void setupAcitivtyComponent(AppComponent appComponent) {
         DaggerRecommendComponent.builder().appComponent(appComponent)
                 .recommendModule(new RecommendModule(this))
                 .build().inject(this);
     }
 
     @Override
-    public int setLayoutId() {
-        return R.layout.fragment_recomend;
+    public void onEmptyViewClick() {
+        initData();
     }
 
     /**
@@ -67,6 +71,7 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
     }
 
     private void initRecycleView(List<AppInfo> mDatas) {
+        Log.d("123", "initRecycleView: " + mDatas.size());
         // TODO: 创建RecyclerView Adapter
         reAdapter = new RecomendAppAdapter(getActivity(), mDatas);
         // TODO: 设置布局管理器
@@ -80,17 +85,6 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
 
     }
 
-    @Override
-    public void showLoading() {
-        mProgressDialog.show();
-    }
-
-    @Override
-    public void dismissLoading() {
-        if (mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
-    }
 
     @Override
     public void showResult(List<AppInfo> datas) {
@@ -102,9 +96,5 @@ public class RecommendFragment extends BaseFragment<RecommendPresenter> implemen
         Toast.makeText(getActivity(), "没有数据", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void showError(String msg) {
-        Toast.makeText(getActivity(), "数据错误", Toast.LENGTH_SHORT).show();
 
-    }
 }

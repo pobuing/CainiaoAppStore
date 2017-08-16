@@ -8,6 +8,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.eftimoff.androipathview.PathView;
 import com.xinw.cainiaoappstore.R;
+import com.xinw.cainiaoappstore.common.constant.Constant;
+import com.xinw.cainiaoappstore.common.util.ACache;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +40,13 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void jumpToMain() {
-        startActivity(new Intent(this, GuideActivity.class));
+        String isShowGuid = ACache.get(this).getAsString(Constant.IS_SHOW_GUIDE);
+        if (isShowGuid == null) {
+            // TODO: first run
+            startActivity(new Intent(this, GuideActivity.class));
+        } else {
+            startActivity(new Intent(this, MainActivity.class));
+        }
         this.finish();
     }
 }

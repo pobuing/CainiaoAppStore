@@ -1,15 +1,18 @@
 package com.xinw.cainiaoappstore.presenter;
 
+import android.util.Log;
+
 import com.xinw.cainiaoappstore.bean.AppInfo;
+import com.xinw.cainiaoappstore.bean.BaseBean;
 import com.xinw.cainiaoappstore.bean.PageBean;
+import com.xinw.cainiaoappstore.common.rx.RxHttpReponseCompat;
+import com.xinw.cainiaoappstore.common.rx.subscriber.ProgressSubscriber;
 import com.xinw.cainiaoappstore.data.RecommendModel;
 import com.xinw.cainiaoappstore.presenter.contract.RecommendContract;
 
 import javax.inject.Inject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Observable;
 
 /**
  * byD9ing on 2017/8/10.
@@ -25,24 +28,19 @@ public class RecommendPresenter extends BasePresenter<RecommendModel, RecommendC
     }
 
     public void requestDatas() {
-        // TODO: progress show
-        mView.showLoading();
-        mModel.getApps(new Callback<PageBean<AppInfo>>() {
-            @Override
-            public void onResponse(Call<PageBean<AppInfo>> call, Response<PageBean<AppInfo>> response) {
-                mView.dismissLoading();
-                if (response != null) {
-                    mView.showResult(response.body().getDatas());
-                } else {
-                    mView.showNodata();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<PageBean<AppInfo>> call, Throwable t) {
-                mView.dismissLoading();
-                mView.showError(t.getMessage());
-            }
-        });
+        Observable<BaseBean<PageBean<AppInfo>>> beanObservable = mModel.getApps();
+        beanObservable.compose(RxHttpReponseCompat.<PageBean<AppInfo>>compatResult())
+                .subscribe(new ProgressSubscriber<PageBean<AppInfo>>(mContext, mView) {
+                    @Override
+                    public void onNext(PageBean<AppInfo> appInfoPageBean) {
+                        Log.d("123", "onNext: ");
+                        if (appInfoPageBean != null) {
+                            mView.showResult(appInfoPageBean.getDatas());
+                        } else {
+                            mView.showNodata();
+                        }
+                    }
+                });
     }
 }

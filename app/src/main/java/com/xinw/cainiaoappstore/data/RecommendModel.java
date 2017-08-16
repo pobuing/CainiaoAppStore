@@ -1,10 +1,11 @@
 package com.xinw.cainiaoappstore.data;
 
 import com.xinw.cainiaoappstore.bean.AppInfo;
+import com.xinw.cainiaoappstore.bean.BaseBean;
 import com.xinw.cainiaoappstore.bean.PageBean;
 import com.xinw.cainiaoappstore.data.http.ApiService;
 
-import retrofit2.Callback;
+import rx.Observable;
 
 /**
  * byD9ing on 2017/8/10.
@@ -20,8 +21,8 @@ public class RecommendModel {
         this.apiService = apiService;
     }
 
-    public void getApps(Callback<PageBean<AppInfo>> callback) {
-        apiService.getApps("{'page':0}").enqueue(callback);
+    public Observable<BaseBean<PageBean<AppInfo>>> getApps() {
+        return apiService.getApps("{'page':0}");
     }
 
 }
