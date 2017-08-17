@@ -1,5 +1,9 @@
 package com.xinw.cainiaoappstore.di.module;
 
+import android.app.Application;
+
+import com.google.gson.Gson;
+import com.xinw.cainiaoappstore.common.http.CommonParamsIntercepter;
 import com.xinw.cainiaoappstore.data.http.ApiService;
 
 import java.util.concurrent.TimeUnit;
@@ -23,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HttpModule {
     @Provides
     @Singleton
-    public OkHttpClient getOkHttpClient() {
+    public OkHttpClient getOkHttpClient(Gson gson, Application application) {
         // TODO: 构建log拦截器
         HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
         // TODO: 设置记录整个body
@@ -34,6 +38,8 @@ public class HttpModule {
                 .connectTimeout(10, TimeUnit.SECONDS)
                 // TODO: 读取超时设置
                 .readTimeout(10, TimeUnit.SECONDS)
+                // TODO: 公共参数拦截器
+                .addInterceptor(new CommonParamsIntercepter(application, gson))
                 .build();
         return okHttpClient;
     }
@@ -52,7 +58,7 @@ public class HttpModule {
 
     @Provides
     @Singleton
-    public ApiService provideApiService(Retrofit retrofit){
+    public ApiService provideApiService(Retrofit retrofit) {
         return retrofit.create(ApiService.class);
     }
 }
