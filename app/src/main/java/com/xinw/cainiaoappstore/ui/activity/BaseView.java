@@ -23,4 +23,14 @@ public interface BaseView {
      * @param displayMessage
      */
     void showError(String displayMessage);
+
+    /**
+     * 授权成功
+     */
+    void onPermissionGranted();
+
+    /**
+     * 授权失败
+     */
+    void onPermissionDisgranted();
 }

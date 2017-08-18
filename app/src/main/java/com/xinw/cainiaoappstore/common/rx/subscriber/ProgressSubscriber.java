@@ -35,13 +35,21 @@ public abstract class ProgressSubscriber<T> extends ErrorHandlerSubscriber<T> {
 
     @Override
     public void onCompleted() {
+
         mBaseView.dismissLoading();
     }
 
     @Override
     public void onError(Throwable e) {
+        if (e != null) {
 
-        BaseException baseException = mErrorHandler.handlerError(e);
-        mBaseView.showError(baseException.getDisplayMessage());
+            BaseException baseException = mErrorHandler.handlerError(e);
+            if (e.getMessage().equals("permission disgranted")) {
+                mBaseView.showError("授权失败");
+            } else {
+                mBaseView.showError(baseException.getDisplayMessage());
+            }
+
+        }
     }
 }

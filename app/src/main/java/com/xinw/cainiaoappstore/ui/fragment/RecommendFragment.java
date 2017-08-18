@@ -97,4 +97,13 @@ public class RecommendFragment extends ProgressFragment<RecommendPresenter> impl
     }
 
 
+    @Override
+    public void onPermissionGranted() {
+
+    }
+
+    @Override
+    public void onPermissionDisgranted() {
+        showError("授权失败");
+    }
 }
