@@ -1,9 +1,7 @@
 package com.xinw.cainiaoappstore.presenter.contract;
 
-import com.xinw.cainiaoappstore.bean.AppInfo;
+import com.xinw.cainiaoappstore.bean.IndexBean;
 import com.xinw.cainiaoappstore.ui.activity.BaseView;
-
-import java.util.List;
 
 /**
  * byD9ing on 2017/8/10.
@@ -19,9 +17,8 @@ public interface RecommendContract {
         /**
          * 显示结果
          *
-         * @param datas app集合列表
          */
-        void showResult(List<AppInfo> datas);
+        void showResult(IndexBean indexBean);
 
         /**
          * 数据为空

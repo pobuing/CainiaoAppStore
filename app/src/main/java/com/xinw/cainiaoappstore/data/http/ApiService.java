@@ -2,6 +2,7 @@ package com.xinw.cainiaoappstore.data.http;
 
 import com.xinw.cainiaoappstore.bean.AppInfo;
 import com.xinw.cainiaoappstore.bean.BaseBean;
+import com.xinw.cainiaoappstore.bean.IndexBean;
 import com.xinw.cainiaoappstore.bean.PageBean;
 
 import retrofit2.http.GET;
@@ -25,4 +26,7 @@ public interface ApiService {
 
     @GET("featured2")
     Observable<BaseBean<PageBean<AppInfo>>> getApps(@Query("p") String jsonParam);
+
+    @GET("index")
+    public  Observable<BaseBean<IndexBean>> index();
 }

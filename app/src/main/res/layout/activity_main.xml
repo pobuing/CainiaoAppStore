@@ -28,10 +28,10 @@
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabSelectedTextColor="@color/red"
-                app:tabTextColor="@color/blue"
                 app:tabIndicatorColor="@color/colorPrimary"
-                app:tabMode="fixed" />
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/md_deep_orange_A400"
+                app:tabTextColor="@color/md_teal_700" />
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/vp_main"

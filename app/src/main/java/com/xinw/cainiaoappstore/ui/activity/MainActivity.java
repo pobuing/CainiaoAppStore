@@ -1,5 +1,6 @@
 package com.xinw.cainiaoappstore.ui.activity;
 
+import android.Manifest;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -12,10 +13,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.xinw.cainiaoappstore.R;
+import com.xinw.cainiaoappstore.common.util.PermissionUtil;
 import com.xinw.cainiaoappstore.di.component.AppComponent;
 import com.xinw.cainiaoappstore.ui.adapter.ViewPageAdapter;
 
 import butterknife.BindView;
+import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity {
 
@@ -37,8 +40,20 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        initDrawerLayout();
-        initTabLayout();
+        PermissionUtil.requestPermisson(this, Manifest.permission.READ_PHONE_STATE).subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                // TODO: permission true
+                if (aBoolean) {
+                    initDrawerLayout();
+                    initTabLayout();
+                    // TODO: false
+                }else {
+
+                }
+            }
+        });
+
 
     }
 

@@ -3,6 +3,7 @@ package com.xinw.cainiaoappstore.di.module;
 import android.app.Application;
 
 import com.google.gson.Gson;
+import com.xinw.cainiaoappstore.BuildConfig;
 import com.xinw.cainiaoappstore.common.http.CommonParamsIntercepter;
 import com.xinw.cainiaoappstore.data.http.ApiService;
 
@@ -28,12 +29,10 @@ public class HttpModule {
     @Provides
     @Singleton
     public OkHttpClient getOkHttpClient(Gson gson, Application application) {
-        // TODO: 构建log拦截器
-        HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
-        // TODO: 设置记录整个body
-        loggin.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         // TODO: 创建OkHttpClient
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(loggin)
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        OkHttpClient okHttpClient = builder
                 // TODO: 连接超时设置
                 .connectTimeout(10, TimeUnit.SECONDS)
                 // TODO: 读取超时设置
@@ -41,6 +40,13 @@ public class HttpModule {
                 // TODO: 公共参数拦截器
                 .addInterceptor(new CommonParamsIntercepter(application, gson))
                 .build();
+        if (BuildConfig.DEBUG) {
+            // TODO: 构建log拦截器
+            HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
+            // TODO: 设置记录整个body
+            loggin.setLevel(HttpLoggingInterceptor.Level.BODY);
+            builder.addInterceptor(loggin);
+        }
         return okHttpClient;
     }
 

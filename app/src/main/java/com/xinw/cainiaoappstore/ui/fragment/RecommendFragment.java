@@ -2,22 +2,18 @@ package com.xinw.cainiaoappstore.ui.fragment;
 
 
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.xinw.cainiaoappstore.R;
-import com.xinw.cainiaoappstore.bean.AppInfo;
+import com.xinw.cainiaoappstore.bean.IndexBean;
 import com.xinw.cainiaoappstore.di.component.AppComponent;
 import com.xinw.cainiaoappstore.di.component.DaggerRecommendComponent;
 import com.xinw.cainiaoappstore.di.module.RecommendModule;
 import com.xinw.cainiaoappstore.presenter.RecommendPresenter;
 import com.xinw.cainiaoappstore.presenter.contract.RecommendContract;
-import com.xinw.cainiaoappstore.ui.adapter.RecomendAppAdapter;
-
-import java.util.List;
+import com.xinw.cainiaoappstore.ui.adapter.IndexMultipleAdapter;
 
 import javax.inject.Inject;
 
@@ -33,10 +29,10 @@ public class RecommendFragment extends ProgressFragment<RecommendPresenter> impl
     RecyclerView mRecyclerView;
 
 
-    private RecomendAppAdapter reAdapter;
 
     @Inject
     RecommendPresenter recommendPresenter;
+    private IndexMultipleAdapter mAdatper;
 
 
     @Override
@@ -70,25 +66,23 @@ public class RecommendFragment extends ProgressFragment<RecommendPresenter> impl
 
     }
 
-    private void initRecycleView(List<AppInfo> mDatas) {
-        Log.d("123", "initRecycleView: " + mDatas.size());
-        // TODO: 创建RecyclerView Adapter
-        reAdapter = new RecomendAppAdapter(getActivity(), mDatas);
+    private void initRecycleView() {
+
         // TODO: 设置布局管理器
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        // TODO: 设置下划线
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL));
         // TODO: 动画
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mAdatper = new IndexMultipleAdapter(getActivity());
+        mRecyclerView.setAdapter(mAdatper);
 
-        mRecyclerView.setAdapter(reAdapter);
 
     }
 
 
     @Override
-    public void showResult(List<AppInfo> datas) {
-        initRecycleView(datas);
+    public void showResult(IndexBean indexBean) {
+        initRecycleView();
+        mAdatper.setData(indexBean);
     }
 
     @Override

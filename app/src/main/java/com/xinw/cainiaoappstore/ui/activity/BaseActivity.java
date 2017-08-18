@@ -2,8 +2,10 @@ package com.xinw.cainiaoappstore.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import com.mikepenz.iconics.context.IconicsLayoutInflater;
 import com.xinw.cainiaoappstore.application.MyApplication;
 import com.xinw.cainiaoappstore.di.component.AppComponent;
 
@@ -23,6 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        LayoutInflaterCompat.setFactory(getLayoutInflater(), new IconicsLayoutInflater(getDelegate()));
         super.onCreate(savedInstanceState);
         // TODO: 抽象布局设置
         setContentView(setLayoutId());
@@ -40,6 +43,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 设置Activity Component
+     *
      * @param appComponent
      */
     protected abstract void setupActivityComponent(AppComponent appComponent);
