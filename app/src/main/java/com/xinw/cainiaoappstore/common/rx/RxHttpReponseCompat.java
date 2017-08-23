@@ -1,7 +1,5 @@
 package com.xinw.cainiaoappstore.common.rx;
 
-import android.util.Log;
-
 import com.xinw.cainiaoappstore.bean.BaseBean;
 import com.xinw.cainiaoappstore.common.exception.ApiException;
 

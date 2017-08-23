@@ -32,6 +32,13 @@ public class HttpModule {
 
         // TODO: 创建OkHttpClient
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        if (BuildConfig.DEBUG) {
+            // TODO: 构建log拦截器
+            HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
+            // TODO: 设置记录整个body
+            loggin.setLevel(HttpLoggingInterceptor.Level.BODY);
+            builder.addInterceptor(loggin);
+        }
         OkHttpClient okHttpClient = builder
                 // TODO: 连接超时设置
                 .connectTimeout(10, TimeUnit.SECONDS)
@@ -40,13 +47,7 @@ public class HttpModule {
                 // TODO: 公共参数拦截器
                 .addInterceptor(new CommonParamsIntercepter(application, gson))
                 .build();
-        if (BuildConfig.DEBUG) {
-            // TODO: 构建log拦截器
-            HttpLoggingInterceptor loggin = new HttpLoggingInterceptor();
-            // TODO: 设置记录整个body
-            loggin.setLevel(HttpLoggingInterceptor.Level.BODY);
-            builder.addInterceptor(loggin);
-        }
+
         return okHttpClient;
     }
 
