@@ -1,6 +1,8 @@
 package com.xinw.cainiaoappstore.presenter.contract;
 
+import com.xinw.cainiaoappstore.bean.AppInfo;
 import com.xinw.cainiaoappstore.bean.IndexBean;
+import com.xinw.cainiaoappstore.bean.PageBean;
 import com.xinw.cainiaoappstore.ui.activity.BaseView;
 
 /**
@@ -9,14 +11,13 @@ import com.xinw.cainiaoappstore.ui.activity.BaseView;
  * good luck
  */
 
-public interface RecommendContract {
+public interface AppInfoContract {
     /**
      * 推荐页面 View
      */
     interface ReView extends BaseView {
         /**
          * 显示结果
-         *
          */
         void showResult(IndexBean indexBean);
 
@@ -35,5 +36,9 @@ public interface RecommendContract {
     }
 
 
+    public interface AppInfoView extends BaseView {
+        void showResult(PageBean<AppInfo> pageBean);
 
+        void onLoadMoreComplete();
+    }
 }

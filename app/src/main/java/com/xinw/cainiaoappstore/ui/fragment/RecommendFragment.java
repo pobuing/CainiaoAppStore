@@ -12,7 +12,7 @@ import com.xinw.cainiaoappstore.di.component.AppComponent;
 import com.xinw.cainiaoappstore.di.component.DaggerRecommendComponent;
 import com.xinw.cainiaoappstore.di.module.RecommendModule;
 import com.xinw.cainiaoappstore.presenter.RecommendPresenter;
-import com.xinw.cainiaoappstore.presenter.contract.RecommendContract;
+import com.xinw.cainiaoappstore.presenter.contract.AppInfoContract;
 import com.xinw.cainiaoappstore.ui.adapter.IndexMultipleAdapter;
 
 import javax.inject.Inject;
@@ -23,7 +23,7 @@ import butterknife.BindView;
  * Created by Ivan on 16/9/26.
  */
 
-public class RecommendFragment extends ProgressFragment<RecommendPresenter> implements RecommendContract.ReView {
+public class RecommendFragment extends ProgressFragment<RecommendPresenter> implements AppInfoContract.ReView {
 
     @BindView(R.id.recycle_view)
     RecyclerView mRecyclerView;
@@ -43,7 +43,7 @@ public class RecommendFragment extends ProgressFragment<RecommendPresenter> impl
 
     @Override
     protected int setLayout() {
-        return R.layout.fragment_recomend;
+        return R.layout.template_recycler_view;
     }
 
     @Override

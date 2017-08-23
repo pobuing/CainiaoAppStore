@@ -13,12 +13,11 @@ import rx.Observable;
  * Describe: 推荐页面的Model
  * good luck
  */
-
-public class RecommendModel {
+public class AppInfoModel {
 
     private ApiService apiService;
 
-    public RecommendModel(ApiService apiService) {
+    public AppInfoModel(ApiService apiService) {
         this.apiService = apiService;
     }
 
@@ -29,6 +28,17 @@ public class RecommendModel {
 
     public Observable<BaseBean<IndexBean>> getIndex() {
         return apiService.index();
+    }
+
+
+    /**
+     * get topList Data from server
+     *
+     * @param page
+     * @return
+     */
+    public Observable<BaseBean<PageBean<AppInfo>>> topList(int page) {
+        return apiService.topList(page);
     }
 
 }

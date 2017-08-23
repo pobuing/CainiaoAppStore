@@ -28,5 +28,9 @@ public interface ApiService {
     Observable<BaseBean<PageBean<AppInfo>>> getApps(@Query("p") String jsonParam);
 
     @GET("index")
-    public  Observable<BaseBean<IndexBean>> index();
+    public Observable<BaseBean<IndexBean>> index();
+
+    // TODO: topList
+    @GET("toplist")
+    public Observable<BaseBean<PageBean<AppInfo>>> topList(@Query("page") int page);
 }

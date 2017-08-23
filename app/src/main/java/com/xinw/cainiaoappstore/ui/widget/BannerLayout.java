@@ -215,7 +215,7 @@ public class BannerLayout extends RelativeLayout {
             }
         });
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageLoader.displayImage(getContext(),url,imageView);
+        imageLoader.displayImage(getContext(), url, imageView);
         return imageView;
     }
 
@@ -502,7 +502,7 @@ public class BannerLayout extends RelativeLayout {
         }
     }
 
-    public  interface ImageLoader extends Serializable {
+    public interface ImageLoader extends Serializable {
         void displayImage(Context context, String path, ImageView imageView);
     }
 }
