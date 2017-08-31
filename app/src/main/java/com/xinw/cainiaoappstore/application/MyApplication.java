@@ -14,6 +14,7 @@ import com.xinw.cainiaoappstore.di.module.HttpModule;
  */
 
 public class MyApplication extends Application {
+    public static String TAG = "AppStroe";
     private AppComponent mAppComponent;
 
     @Override

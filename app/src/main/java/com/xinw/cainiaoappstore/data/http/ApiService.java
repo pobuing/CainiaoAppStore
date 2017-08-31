@@ -3,9 +3,13 @@ package com.xinw.cainiaoappstore.data.http;
 import com.xinw.cainiaoappstore.bean.AppInfo;
 import com.xinw.cainiaoappstore.bean.BaseBean;
 import com.xinw.cainiaoappstore.bean.IndexBean;
+import com.xinw.cainiaoappstore.bean.LoginBean;
 import com.xinw.cainiaoappstore.bean.PageBean;
+import com.xinw.cainiaoappstore.bean.requestbean.LoginRequestBean;
 
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -33,4 +37,11 @@ public interface ApiService {
     // TODO: topList
     @GET("toplist")
     public Observable<BaseBean<PageBean<AppInfo>>> topList(@Query("page") int page);
+
+    @GET("game")
+    Observable<BaseBean<PageBean<AppInfo>>> game(@Query("page") int page);
+
+
+    @POST("login")
+    Observable<BaseBean<LoginBean>> login(@Body LoginRequestBean param);
 }

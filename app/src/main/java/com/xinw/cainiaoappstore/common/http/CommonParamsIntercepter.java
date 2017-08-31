@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -45,7 +46,7 @@ public class CommonParamsIntercepter implements Interceptor {
         try {
             String method = request.method();
             HashMap<String, Object> commomParamsMap = new HashMap<>();
-//        commomParamsMap.put(Constant.IMEI, DeviceUtils.getIMEI(mContext));
+            commomParamsMap.put(Constant.IMEI, DeviceUtils.getIMEI(mContext));
             commomParamsMap.put(Constant.MODEL, DeviceUtils.getModel());
             commomParamsMap.put(Constant.LANGUAGE, DeviceUtils.getLanguage());
             commomParamsMap.put(Constant.os, DeviceUtils.getBuildVersionIncremental());
@@ -99,17 +100,35 @@ public class CommonParamsIntercepter implements Interceptor {
 
 
             } else if (method.equals("POST")) {
+//                RequestBody body = request.body();
+//                HashMap<String, Object> rootMap = new HashMap<>();
+//                Buffer buffer = new Buffer();
+//                body.writeTo(buffer);
+//                String oldJsonParams = buffer.readUtf8();
+//                rootMap = mGson.fromJson(oldJsonParams, HashMap.class);
+//                //重新组装
+//                rootMap.put("publicParams", rootMap);
+//                String newParamJson = mGson.toJson(rootMap);
+//                //重新构造请求
+//                request = request.newBuilder().post(RequestBody.create(JSON, newParamJson)).build();
+
+
                 RequestBody body = request.body();
-                HashMap<String, Object> rootMap = new HashMap<>();
-                Buffer buffer = new Buffer();
-                body.writeTo(buffer);
-                String oldJsonParams = buffer.readUtf8();
-                rootMap = mGson.fromJson(oldJsonParams, HashMap.class);
-                //重新组装
-                rootMap.put("publicParams", rootMap);
-                String newParamJson = mGson.toJson(rootMap);
-                //重新构造请求
-                request = request.newBuilder().post(RequestBody.create(JSON, newParamJson)).build();
+                HashMap<String,Object> rootMap = new HashMap<>();
+                if(body instanceof FormBody){ // form 表单
+                    for (int i=0;i<((FormBody) body).size();i++){
+                        rootMap.put(((FormBody) body).encodedName(i),((FormBody) body).encodedValue(i));
+                    }
+                }
+                else{
+                    Buffer buffer = new Buffer();
+                    body.writeTo(buffer);
+                    String oldJsonParams =  buffer.readUtf8();
+                    rootMap = mGson.fromJson(oldJsonParams,HashMap.class); // 原始参数
+                    rootMap.put("publicParams",commomParamsMap); // 重新组装
+                    String newJsonParams = mGson.toJson(rootMap); // {"page":0,"publicParams":{"imei":'xxxxx',"sdk":14,.....}}
+                    request = request.newBuilder().post(RequestBody.create(JSON, newJsonParams)).build();
+                }
             }
         } catch (JsonSyntaxException e) {
             e.printStackTrace();

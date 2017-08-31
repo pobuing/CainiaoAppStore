@@ -41,4 +41,7 @@ public class AppInfoModel {
         return apiService.topList(page);
     }
 
+    public Observable<BaseBean<PageBean<AppInfo>>> getGames(int page) {
+        return apiService.game(page);
+    }
 }

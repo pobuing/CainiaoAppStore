@@ -24,4 +24,7 @@ public class Constant {
     public static final String SDK = "sdk";
     public static final String DENSITY_SCALE_FACTOR = "densityScaleFactor";
     public static final String PARAM = "p";
+    public static final String TOKEN = "user_token";
+    public static final String USER = "user_user";
+
 }

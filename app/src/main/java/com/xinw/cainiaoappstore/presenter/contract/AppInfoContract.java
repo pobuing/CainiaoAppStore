@@ -36,7 +36,8 @@ public interface AppInfoContract {
     }
 
 
-    public interface AppInfoView extends BaseView {
+    interface AppInfoView extends BaseView {
+
         void showResult(PageBean<AppInfo> pageBean);
 
         void onLoadMoreComplete();

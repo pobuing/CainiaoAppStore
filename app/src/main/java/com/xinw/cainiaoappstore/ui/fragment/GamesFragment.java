@@ -1,31 +1,35 @@
 package com.xinw.cainiaoappstore.ui.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.xinw.cainiaoappstore.R;
+import com.xinw.cainiaoappstore.di.component.AppComponent;
+import com.xinw.cainiaoappstore.di.component.DaggerAppInfoComponent;
+import com.xinw.cainiaoappstore.di.module.AppInfoModule;
+import com.xinw.cainiaoappstore.presenter.AppInfoPresenter;
+import com.xinw.cainiaoappstore.ui.adapter.AppInfoAdapter;
 
 
 /**
  * Created by Ivan on 16/9/26.
  */
 
-public class GamesFragment extends Fragment {
+public class GamesFragment extends BaseAppInfoFragment {
 
 
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    int type() {
+        return AppInfoPresenter.GAME;
+    }
 
+    @Override
+    protected AppInfoAdapter buildApapter() {
+        return AppInfoAdapter.build().showPosition(false)
+                .showShowBrief(true)
+                .showCategoryName(true).build();
+    }
 
-        View view = inflater.inflate(R.layout.fragment_games,container,false);
-        return view;
-
-
+    @Override
+    public void setupAcitivtyComponent(AppComponent appComponent) {
+        DaggerAppInfoComponent.builder().appComponent(appComponent)
+                .appInfoModule(new AppInfoModule(this))
+                .build().injectGameFragment(this);
     }
 }

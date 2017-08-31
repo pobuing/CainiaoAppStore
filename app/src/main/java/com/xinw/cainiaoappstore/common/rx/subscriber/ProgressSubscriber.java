@@ -1,6 +1,7 @@
 package com.xinw.cainiaoappstore.common.rx.subscriber;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.xinw.cainiaoappstore.common.exception.BaseException;
 import com.xinw.cainiaoappstore.ui.activity.BaseView;
@@ -44,8 +45,12 @@ public abstract class ProgressSubscriber<T> extends ErrorHandlerSubscriber<T> {
         if (e != null) {
 
             BaseException baseException = mErrorHandler.handlerError(e);
-            if (e.getMessage().equals("permission disgranted")) {
-                mBaseView.showError("授权失败");
+            if (!TextUtils.isEmpty(e.getMessage())) {
+                if (e.getMessage().equals("permission disgranted")) {
+                    mBaseView.showError("授权失败");
+                } else {
+                    mBaseView.showError(baseException.getDisplayMessage());
+                }
             } else {
                 mBaseView.showError(baseException.getDisplayMessage());
             }

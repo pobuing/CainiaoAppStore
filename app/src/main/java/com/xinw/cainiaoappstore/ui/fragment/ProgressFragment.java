@@ -15,6 +15,8 @@ import com.xinw.cainiaoappstore.di.component.AppComponent;
 import com.xinw.cainiaoappstore.presenter.BasePresenter;
 import com.xinw.cainiaoappstore.ui.activity.BaseView;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -34,6 +36,8 @@ public abstract class ProgressFragment<T extends BasePresenter> extends Fragment
     private MyApplication mApplication;
     private Unbinder unBinder;
 
+    @Inject
+    T mPresenter;
 
     @Nullable
     @Override

@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import com.mikepenz.iconics.context.IconicsLayoutInflater;
 import com.xinw.cainiaoappstore.application.MyApplication;
 import com.xinw.cainiaoappstore.di.component.AppComponent;
+import com.xinw.cainiaoappstore.presenter.BasePresenter;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -18,10 +21,14 @@ import butterknife.Unbinder;
  * good luck
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity {
 
     private Unbinder mUnBind;
     private MyApplication mApplication;
+
+
+    @Inject
+    T mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
