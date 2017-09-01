@@ -2,10 +2,13 @@ package com.xinw.cainiaoappstore.data.http;
 
 import com.xinw.cainiaoappstore.bean.AppInfo;
 import com.xinw.cainiaoappstore.bean.BaseBean;
+import com.xinw.cainiaoappstore.bean.Category;
 import com.xinw.cainiaoappstore.bean.IndexBean;
 import com.xinw.cainiaoappstore.bean.LoginBean;
 import com.xinw.cainiaoappstore.bean.PageBean;
 import com.xinw.cainiaoappstore.bean.requestbean.LoginRequestBean;
+
+import java.util.List;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -44,4 +47,7 @@ public interface ApiService {
 
     @POST("login")
     Observable<BaseBean<LoginBean>> login(@Body LoginRequestBean param);
+
+    @GET("category")
+    Observable<BaseBean<List<Category>>> getCategories();
 }

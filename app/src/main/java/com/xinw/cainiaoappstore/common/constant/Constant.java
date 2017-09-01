@@ -10,6 +10,8 @@ package com.xinw.cainiaoappstore.common.constant;
 
 public class Constant {
 
+    public static final String BASE_IMG_URL = "http://file.market.xiaomi.com/mfc/thumbnail/png/w150q80/";
+
 
     public static final String IS_SHOW_GUIDE = "is_show_guide";
 
