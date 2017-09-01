@@ -42,6 +42,7 @@ public abstract class ProgressSubscriber<T> extends ErrorHandlerSubscriber<T> {
 
     @Override
     public void onError(Throwable e) {
+        super.onError(e);
         if (e != null) {
 
             BaseException baseException = mErrorHandler.handlerError(e);

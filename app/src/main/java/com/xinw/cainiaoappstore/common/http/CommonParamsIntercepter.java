@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.xinw.cainiaoappstore.common.constant.Constant;
+import com.xinw.cainiaoappstore.common.util.ACache;
 import com.xinw.cainiaoappstore.common.util.DensityUtil;
 import com.xinw.cainiaoappstore.common.util.DeviceUtils;
 
@@ -53,6 +54,10 @@ public class CommonParamsIntercepter implements Interceptor {
             commomParamsMap.put(Constant.RESOLUTION, DensityUtil.getScreenW(mContext) + "*" + DensityUtil.getScreenH(mContext));
             commomParamsMap.put(Constant.SDK, DeviceUtils.getBuildVersionSDK() + "");
             commomParamsMap.put(Constant.DENSITY_SCALE_FACTOR, mContext.getResources().getDisplayMetrics().density + "");
+
+            // TODO: send taken to Server
+            String token = ACache.get(mContext).getAsString(Constant.TOKEN);
+            commomParamsMap.put(Constant.TOKEN, token == null ? "" : token);
 
 
             if (method.equals("GET")) {
@@ -114,18 +119,17 @@ public class CommonParamsIntercepter implements Interceptor {
 
 
                 RequestBody body = request.body();
-                HashMap<String,Object> rootMap = new HashMap<>();
-                if(body instanceof FormBody){ // form 表单
-                    for (int i=0;i<((FormBody) body).size();i++){
-                        rootMap.put(((FormBody) body).encodedName(i),((FormBody) body).encodedValue(i));
+                HashMap<String, Object> rootMap = new HashMap<>();
+                if (body instanceof FormBody) { // form 表单
+                    for (int i = 0; i < ((FormBody) body).size(); i++) {
+                        rootMap.put(((FormBody) body).encodedName(i), ((FormBody) body).encodedValue(i));
                     }
-                }
-                else{
+                } else {
                     Buffer buffer = new Buffer();
                     body.writeTo(buffer);
-                    String oldJsonParams =  buffer.readUtf8();
-                    rootMap = mGson.fromJson(oldJsonParams,HashMap.class); // 原始参数
-                    rootMap.put("publicParams",commomParamsMap); // 重新组装
+                    String oldJsonParams = buffer.readUtf8();
+                    rootMap = mGson.fromJson(oldJsonParams, HashMap.class); // 原始参数
+                    rootMap.put("publicParams", commomParamsMap); // 重新组装
                     String newJsonParams = mGson.toJson(rootMap); // {"page":0,"publicParams":{"imei":'xxxxx',"sdk":14,.....}}
                     request = request.newBuilder().post(RequestBody.create(JSON, newJsonParams)).build();
                 }
