@@ -18,10 +18,6 @@ import java.util.List;
 import butterknife.BindView;
 
 
-/**
- * Created by Ivan on 16/9/26.
- */
-
 public class CategoryFragment extends ProgressFragment<CategoryPresenter> implements CategoryContract.CategoryView {
 
 
