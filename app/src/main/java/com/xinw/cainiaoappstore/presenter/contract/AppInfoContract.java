@@ -34,7 +34,10 @@ public interface AppInfoContract {
         void showError(String msg);
 
     }
+    interface  AppDetailView extends BaseView{
 
+        void showAppDetail(AppInfo appInfo);
+    }
 
     interface AppInfoView extends BaseView {
 

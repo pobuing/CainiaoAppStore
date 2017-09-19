@@ -1,15 +1,19 @@
 package com.xinw.cainiaoappstore.ui.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.xinw.cainiaoappstore.R;
 import com.xinw.cainiaoappstore.bean.AppInfo;
 import com.xinw.cainiaoappstore.bean.PageBean;
 import com.xinw.cainiaoappstore.presenter.AppInfoPresenter;
 import com.xinw.cainiaoappstore.presenter.contract.AppInfoContract;
+import com.xinw.cainiaoappstore.ui.activity.AppDetailActivity;
 import com.xinw.cainiaoappstore.ui.adapter.AppInfoAdapter;
 import com.xinw.cainiaoappstore.ui.widget.DividerItemDecoration;
 
@@ -29,13 +33,12 @@ public abstract class BaseAppInfoFragment extends ProgressFragment<AppInfoPresen
 
     private AppInfoAdapter mAdapter;
 
-    private int page = 0;
+    protected int page = 0;
 
     @Override
     public void onLoadMoreRequested() {
         mPresenter.requestData(type(), page);
     }
-
 
 
     @Override
@@ -66,7 +69,7 @@ public abstract class BaseAppInfoFragment extends ProgressFragment<AppInfoPresen
     }
 
 
-    private void initRecyclerView() {
+    protected void initRecyclerView() {
         // TODO: 设置布局管理器
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // TODO: 动画
@@ -75,6 +78,17 @@ public abstract class BaseAppInfoFragment extends ProgressFragment<AppInfoPresen
         mAdapter = buildApapter();
         mAdapter.setOnLoadMoreListener(this);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                // TODO: 存储视图
+                mApplication.setmView(view);
+                Intent intent = new Intent(getActivity(), AppDetailActivity.class);
+                AppInfo appInfo = mAdapter.getItem(position);
+                intent.putExtra("appinfo", appInfo);
+                startActivity(intent);
+            }
+        });
     }
 
     protected abstract AppInfoAdapter buildApapter();

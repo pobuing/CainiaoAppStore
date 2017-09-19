@@ -44,4 +44,22 @@ public class AppInfoModel {
     public Observable<BaseBean<PageBean<AppInfo>>> getGames(int page) {
         return apiService.game(page);
     }
+
+
+    public Observable<BaseBean<PageBean<AppInfo>>> getFeaturedAppsByCategory(int categoryid, int page) {
+        return apiService.getFeaturedAppsByCategory(categoryid, page);
+    }
+
+    public Observable<BaseBean<PageBean<AppInfo>>> getTopListAppsByCategory(int categoryid, int page) {
+        return apiService.getTopListAppsByCategory(categoryid, page);
+    }
+
+    public Observable<BaseBean<PageBean<AppInfo>>> getNewListAppsByCategory(int categoryid, int page) {
+        return apiService.getNewListAppsByCategory(categoryid, page);
+    }
+
+    public Observable<BaseBean<AppInfo>> getAppDetail( int id){
+
+        return  apiService.getAppDetail(id);
+    }
 }
